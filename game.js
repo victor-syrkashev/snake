@@ -1,30 +1,26 @@
-import { snake } from "./snake.js";
-import { apple } from "./apple.js"; 
-import { playField } from "./playField.js";
+import { PlayField } from './playField.js';
 
-const game = {
-  paintTheField() {
-    const array = playField.creatPlayField();
-    let board = '=============\n';
-    array.forEach((innerArray, y) => {
-      innerArray.forEach((elem, x) => {
-        if (x === snake.x && y === snake.y) {
-          board += '1 ';
-        } else if (x === apple.x && y === apple.y) {
-          board += 'A ';
-        } else {
-          board += '0 ';
-        }
-      });
-      board += '\n';
-    });
-    board += '=============\n';
-    console.log(board);
-  },
-};
+const board = document.querySelector('.board');
+const playField = new PlayField(11);
 
-apple.randomPlace();
-game.paintTheField();
-snake.down();
-snake.down();
-game.paintTheField();
+document.addEventListener('keydown', (event) => {
+  const keyName = event.key;
+  if (keyName === 'ArrowUp') {
+    playField.snake.moveUp();
+    board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
+  }
+  if (keyName === 'ArrowDown') {
+    playField.snake.moveDown();
+    board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
+  }
+  if (keyName === 'ArrowLeft') {
+    playField.snake.moveLeft();
+    board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
+  }
+  if (keyName === 'ArrowRight') {
+    playField.snake.moveRight();
+    board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
+  }
+});
+
+board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;

@@ -1,20 +1,45 @@
-import { playField } from "./playField.js";
+class Snake {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.direction = 'down';
+  }
 
-const snake = {
-  x: (playField.size - 1) / 2,
-  y: (playField.size - 1) / 2,
-  up() {
+  moveUp() {
+    if (this.direction === 'down') {
+      console.log("snake can't turn around");
+      return;
+    }
     this.y -= 1;
-  },
-  down() {
-    this.y += 1;
-  },
-  left() {
-    this.x -= 1;
-  },
-  right() {
-    this.x += 1;
-  },
-};
+    this.direction = 'up';
+  }
 
-export { snake };
+  moveDown() {
+    if (this.direction === 'up') {
+      console.log("snake can't turn around");
+      return;
+    }
+    this.y += 1;
+    this.direction = 'down';
+  }
+
+  moveLeft() {
+    if (this.direction === 'right') {
+      console.log("snake can't turn around");
+      return;
+    }
+    this.x -= 1;
+    this.direction = 'left';
+  }
+
+  moveRight() {
+    if (this.direction === 'left') {
+      console.log("snake can't turn around");
+      return;
+    }
+    this.x += 1;
+    this.direction = 'right';
+  }
+}
+
+export { Snake };
