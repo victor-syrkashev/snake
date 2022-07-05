@@ -8,9 +8,7 @@ class PlayField {
     this.snake = new Snake(
       Math.floor((this.size - 1) / 2),
       Math.floor((this.size - 1) / 2),
-      this.size,
     );
-    // this.snake = new Snake([4, 5], [3, 3]);
     this.apple = new Apple(
       Math.floor(Math.random() * this.size),
       Math.floor(Math.random() * this.size)
@@ -18,7 +16,6 @@ class PlayField {
   }
 
   creatPlayField() {
-    // TODO: meaningful names
     const array = [];
     const innerArray = [];
     for (let i = 0; i < this.size; i++) {
@@ -30,14 +27,43 @@ class PlayField {
     return array;
   }
 
-  paintTheField() {
-    if (this.snake.x < 0 || this.snake.x === this.size
-      || this.snake.y < 0 || this.snake.y === this.size) {
-      console.log('Game over...snake hit the wall');
-      return 'Game over';
-    }
+  // TODO: create game loop
 
-    if (this.snake.x === this.apple.x && this.snake.y === this.apple.y) {
+  collisionDetection() {
+    if (this.snake.point[0].x < 0 || this.snake.point[0].x === this.size
+      || this.snake.point[0].y < 0 || this.snake.point[0].y === this.size) {
+      return true;
+    }
+  }
+
+  paintTheField() {
+    if (this.snake.point[0].x === this.apple.x && this.snake.point[0].y === this.apple.y) {
+      const lastSnakeIndex = this.snake.point.length - 1;
+      if (this.snake.point[lastSnakeIndex].direction === 'down') {
+        this.snake.point.push({
+          x: this.snake.point[lastSnakeIndex].x,
+          y: this.snake.point[lastSnakeIndex].y - 1,
+          direction: this.snake.point[lastSnakeIndex].direction,
+        });
+      } else if (this.snake.point[lastSnakeIndex].direction === 'up') {
+        this.snake.point.push({
+          x: this.snake.point[lastSnakeIndex].x,
+          y: this.snake.point[lastSnakeIndex].y + 1,
+          direction: this.snake.point[lastSnakeIndex].direction,
+        });
+      } else if (this.snake.point[lastSnakeIndex].direction === 'left') {
+        this.snake.point.push({
+          x: this.snake.point[lastSnakeIndex].x + 1,
+          y: this.snake.point[lastSnakeIndex].y,
+          direction: this.snake.point[lastSnakeIndex].direction,
+        });
+      } else if (this.snake.point[lastSnakeIndex].direction === 'right') {
+        this.snake.point.push({
+          x: this.snake.point[lastSnakeIndex].x - 1,
+          y: this.snake.point[lastSnakeIndex].y,
+          direction: this.snake.point[lastSnakeIndex].direction,
+        });
+      }
       this.apple = new Apple(
         Math.floor(Math.random() * this.size),
         Math.floor(Math.random() * this.size)
@@ -46,9 +72,13 @@ class PlayField {
     let board = '=====================\n';
     this.matrix.forEach((innerArray, y) => {
       innerArray.forEach((_elm, x) => {
-        if (x === this.snake.x && y === this.snake.y) {
-          board += '1 ';
-        } else if (x === this.apple.x && y === this.apple.y) {
+        for (let i = 0; i < this.snake.point.length; i++) {
+          if (x === this.snake.point[i].x && y === this.snake.point[i].y) {
+            board += '1 ';
+            return;
+          }
+        }
+        if (x === this.apple.x && y === this.apple.y) {
           board += 'A ';
         } else {
           board += '0 ';
