@@ -1,44 +1,34 @@
 class Snake {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.direction = 'down';
+    this.point = [{ x, y, direction: 'down' }];
   }
 
   moveUp() {
-    if (this.direction === 'down') {
-      console.log("snake can't turn around");
-      return;
-    }
-    this.y -= 1;
-    this.direction = 'up';
+    this.moveSnake(0, -1, 'up', 'down');
   }
 
   moveDown() {
-    if (this.direction === 'up') {
-      console.log("snake can't turn around");
-      return;
-    }
-    this.y += 1;
-    this.direction = 'down';
+    this.moveSnake(0, 1, 'down', 'up');
   }
 
   moveLeft() {
-    if (this.direction === 'right') {
-      console.log("snake can't turn around");
-      return;
-    }
-    this.x -= 1;
-    this.direction = 'left';
+    this.moveSnake(-1, 0, 'left', 'right');
   }
 
   moveRight() {
-    if (this.direction === 'left') {
-      console.log("snake can't turn around");
+    this.moveSnake(1, 0, 'right', 'left');
+  }
+
+  moveSnake(x, y, directionMove, directionBlocked) {
+    if (this.point[0].direction === directionBlocked) {
       return;
     }
-    this.x += 1;
-    this.direction = 'right';
+    this.point.unshift({
+      x: this.point[0].x + x,
+      y: this.point[0].y + y,
+      direction: directionMove,
+    });
+    this.point.pop();
   }
 }
 
