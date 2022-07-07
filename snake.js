@@ -30,6 +30,40 @@ class Snake {
     });
     this.point.pop();
   }
+
+  eatApple(x, y) {
+    if (this.point[0].x === x
+       && this.point[0].y === y) {
+      const lastSnakeIndex = this.point.length - 1;
+      if (this.point[lastSnakeIndex].direction === 'down') {
+        this.point.push({
+          x: this.point[lastSnakeIndex].x,
+          y: this.point[lastSnakeIndex].y - 1,
+          direction: this.point[lastSnakeIndex].direction,
+        });
+      } else if (this.point[lastSnakeIndex].direction === 'up') {
+        this.point.push({
+          x: this.point[lastSnakeIndex].x,
+          y: this.point[lastSnakeIndex].y + 1,
+          direction: this.point[lastSnakeIndex].direction,
+        });
+      } else if (this.point[lastSnakeIndex].direction === 'left') {
+        this.point.push({
+          x: this.point[lastSnakeIndex].x + 1,
+          y: this.point[lastSnakeIndex].y,
+          direction: this.point[lastSnakeIndex].direction,
+        });
+      } else if (this.point[lastSnakeIndex].direction === 'right') {
+        this.point.push({
+          x: this.point[lastSnakeIndex].x - 1,
+          y: this.point[lastSnakeIndex].y,
+          direction: this.point[lastSnakeIndex].direction,
+        });
+      }
+      return true;
+    }
+    return false;
+  }
 }
 
 export { Snake };

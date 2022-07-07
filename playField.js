@@ -34,41 +34,15 @@ class PlayField {
       || this.snake.point[0].y < 0 || this.snake.point[0].y === this.size) {
       return true;
     }
+    for (let i = 1; i < this.snake.point.length; i++) {
+      if (this.snake.point[0].x === this.snake.point[i].x
+        && this.snake.point[0].y === this.snake.point[i].y) {
+        return true;
+      }
+    }
   }
 
   paintTheField() {
-    if (this.snake.point[0].x === this.apple.x && this.snake.point[0].y === this.apple.y) {
-      const lastSnakeIndex = this.snake.point.length - 1;
-      if (this.snake.point[lastSnakeIndex].direction === 'down') {
-        this.snake.point.push({
-          x: this.snake.point[lastSnakeIndex].x,
-          y: this.snake.point[lastSnakeIndex].y - 1,
-          direction: this.snake.point[lastSnakeIndex].direction,
-        });
-      } else if (this.snake.point[lastSnakeIndex].direction === 'up') {
-        this.snake.point.push({
-          x: this.snake.point[lastSnakeIndex].x,
-          y: this.snake.point[lastSnakeIndex].y + 1,
-          direction: this.snake.point[lastSnakeIndex].direction,
-        });
-      } else if (this.snake.point[lastSnakeIndex].direction === 'left') {
-        this.snake.point.push({
-          x: this.snake.point[lastSnakeIndex].x + 1,
-          y: this.snake.point[lastSnakeIndex].y,
-          direction: this.snake.point[lastSnakeIndex].direction,
-        });
-      } else if (this.snake.point[lastSnakeIndex].direction === 'right') {
-        this.snake.point.push({
-          x: this.snake.point[lastSnakeIndex].x - 1,
-          y: this.snake.point[lastSnakeIndex].y,
-          direction: this.snake.point[lastSnakeIndex].direction,
-        });
-      }
-      this.apple = new Apple(
-        Math.floor(Math.random() * this.size),
-        Math.floor(Math.random() * this.size)
-      );
-    }
     let board = '=====================\n';
     this.matrix.forEach((innerArray, y) => {
       innerArray.forEach((_elm, x) => {
