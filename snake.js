@@ -1,6 +1,6 @@
 class Snake {
   constructor(x, y) {
-    this.point = [{ x, y, direction: 'down' }];
+    this.points = [{ x, y, direction: 'down' }];
   }
 
   moveUp() {
@@ -20,48 +20,62 @@ class Snake {
   }
 
   moveSnake(x, y, directionMove, directionBlocked) {
-    if (this.point[0].direction === directionBlocked) {
+    if (this.points[0].direction === directionBlocked) {
       return;
     }
-    this.point.unshift({
-      x: this.point[0].x + x,
-      y: this.point[0].y + y,
+    this.points.unshift({
+      x: this.points[0].x + x,
+      y: this.points[0].y + y,
       direction: directionMove,
     });
-    this.point.pop();
+    this.points.pop();
   }
 
   eatApple(x, y) {
-    if (this.point[0].x === x
-       && this.point[0].y === y) {
-      const lastSnakeIndex = this.point.length - 1;
-      if (this.point[lastSnakeIndex].direction === 'down') {
-        this.point.push({
-          x: this.point[lastSnakeIndex].x,
-          y: this.point[lastSnakeIndex].y - 1,
-          direction: this.point[lastSnakeIndex].direction,
+    if (this.points[0].x === x &&
+        this.points[0].y === y) {
+      const lastSnakeIndex = this.points.length - 1;
+
+      if (this.points[lastSnakeIndex].direction === 'down') {
+        this.points.push({
+          x: this.points[lastSnakeIndex].x,
+          y: this.points[lastSnakeIndex].y - 1,
+          direction: this.points[lastSnakeIndex].direction,
         });
-      } else if (this.point[lastSnakeIndex].direction === 'up') {
-        this.point.push({
-          x: this.point[lastSnakeIndex].x,
-          y: this.point[lastSnakeIndex].y + 1,
-          direction: this.point[lastSnakeIndex].direction,
+      } else if (this.points[lastSnakeIndex].direction === 'up') {
+        this.points.push({
+          x: this.points[lastSnakeIndex].x,
+          y: this.points[lastSnakeIndex].y + 1,
+          direction: this.points[lastSnakeIndex].direction,
         });
-      } else if (this.point[lastSnakeIndex].direction === 'left') {
-        this.point.push({
-          x: this.point[lastSnakeIndex].x + 1,
-          y: this.point[lastSnakeIndex].y,
-          direction: this.point[lastSnakeIndex].direction,
+      } else if (this.points[lastSnakeIndex].direction === 'left') {
+        this.points.push({
+          x: this.points[lastSnakeIndex].x + 1,
+          y: this.points[lastSnakeIndex].y,
+          direction: this.points[lastSnakeIndex].direction,
         });
-      } else if (this.point[lastSnakeIndex].direction === 'right') {
-        this.point.push({
-          x: this.point[lastSnakeIndex].x - 1,
-          y: this.point[lastSnakeIndex].y,
-          direction: this.point[lastSnakeIndex].direction,
+      } else if (this.points[lastSnakeIndex].direction === 'right') {
+        this.points.push({
+          x: this.points[lastSnakeIndex].x - 1,
+          y: this.points[lastSnakeIndex].y,
+          direction: this.points[lastSnakeIndex].direction,
         });
       }
+
       return true;
     }
+
+    return false;
+  }
+
+  collideWithTail() {
+    for (let i = 1; i < this.points.length; i++) {
+      if (this.points[0].x === this.points[i].x &&
+          this.points[0].y === this.points[i].y) {
+        return true;
+      }
+    }
+
     return false;
   }
 }

@@ -5,10 +5,14 @@ class PlayField {
   constructor(size) {
     this.size = size;
     this.matrix = this.creatPlayField();
+    this.isGameOver = false;
+
     this.snake = new Snake(
       Math.floor((this.size - 1) / 2),
       Math.floor((this.size - 1) / 2),
     );
+
+    // TODO: move to addNewApple()
     this.apple = new Apple(
       Math.floor(Math.random() * this.size),
       Math.floor(Math.random() * this.size)
@@ -27,17 +31,36 @@ class PlayField {
     return array;
   }
 
-  // TODO: create game loop
+  snakeCollideWithWall() {
+    return this.snake.points[0].x < 0 ||
+        this.snake.points[0].x === this.size ||
+        this.snake.points[0].y < 0 ||
+        this.snake.points[0].y === this.size;
+  }
 
-  collisionDetection() {
-    if (this.snake.point[0].x < 0 || this.snake.point[0].x === this.size
-      || this.snake.point[0].y < 0 || this.snake.point[0].y === this.size) {
-      return true;
+  // TODO: move to snake.js
+  changeSnakeDirection(keyName) {
+    if (keyName === 'ArrowUp') {
+      if (this.snake.points[0].direction !== 'down') {
+        this.snake.points[0].direction = 'up';
+      }
     }
-    for (let i = 1; i < this.snake.point.length; i++) {
-      if (this.snake.point[0].x === this.snake.point[i].x
-        && this.snake.point[0].y === this.snake.point[i].y) {
-        return true;
+
+    if (keyName === 'ArrowDown') {
+      if (this.snake.points[0].direction !== 'up') {
+        this.snake.points[0].direction = 'down';
+      }
+    }
+
+    if (keyName === 'ArrowLeft') {
+      if (this.snake.points[0].direction !== 'right') {
+        this.snake.points[0].direction = 'left';
+      }
+    }
+
+    if (keyName === 'ArrowRight') {
+      if (this.snake.points[0].direction !== 'left') {
+        this.snake.points[0].direction = 'right';
       }
     }
   }
@@ -46,8 +69,8 @@ class PlayField {
     let board = '=====================\n';
     this.matrix.forEach((innerArray, y) => {
       innerArray.forEach((_elm, x) => {
-        for (let i = 0; i < this.snake.point.length; i++) {
-          if (x === this.snake.point[i].x && y === this.snake.point[i].y) {
+        for (let i = 0; i < this.snake.points.length; i++) {
+          if (x === this.snake.points[i].x && y === this.snake.points[i].y) {
             board += '<span style="color: OrangeRed">1</span> ';
             return;
           }
@@ -62,6 +85,46 @@ class PlayField {
     });
     board += '=====================\n';
     return board;
+  }
+
+  update() {
+    this.isGameOver = this.snakeCollideWithWall() || this.snake.collideWithTail();
+
+    if (this.isGameOver) {
+      return;
+    }
+
+    if (this.snake.collideWithApple(this.apple.x, this.apple.y)) {
+      this.snake.eatApple(this.apple.x, this.apple.y);
+      this.addNewApple();
+    }
+
+    // if (this.snake.eatApple(this.apple.x, this.apple.y)) {
+    //   this.apple = new Apple(
+    //     Math.floor(Math.random() * this.size),
+    //     Math.floor(Math.random() * this.size)
+    //   );
+    // }
+
+    this.snake.update();
+
+    // if (this.snake.points[0].direction === 'down') {
+    //   this.snake.moveDown();
+    // } else if (this.snake.points[0].direction === 'up') {
+    //   this.snake.moveUp();
+    // } else if (this.snake.points[0].direction === 'left') {
+    //   this.snake.moveLeft();
+    // } else if (this.snake.points[0].direction === 'right') {
+    //   this.snake.moveRight();
+    // }
+  }
+
+  paint() {
+    if (this.isGameOver) {
+      return 'Game Over';
+    } else {
+      return this.paintTheField();
+    }
   }
 }
 
