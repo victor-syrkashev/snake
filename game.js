@@ -2,11 +2,11 @@ import { PlayField } from './playField.js';
 import { Apple } from './apple.js';
 
 const board = document.querySelector('.board');
-const playField = new PlayField(11);
+const playField = new PlayField(17);
 
 function checkAndPaint() {
   if (playField.collisionDetection()) {
-    clearInterval(timerId);
+    cancelAnimationFrame(requestId);
     board.innerHTML = '<pre>Game Over</pre>';
   } else {
     if (playField.snake.eatApple(playField.apple.x, playField.apple.y)) {
@@ -43,7 +43,9 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-let timerId = setInterval(() => {
+let requestId;
+
+function step() {
   if (playField.snake.point[0].direction === 'down') {
     playField.snake.moveDown();
   } else if (playField.snake.point[0].direction === 'up') {
@@ -54,4 +56,9 @@ let timerId = setInterval(() => {
     playField.snake.moveRight();
   }
   checkAndPaint();
-}, 700);
+  setTimeout(() => {
+    requestId = requestAnimationFrame(step);
+  }, 1000 / 2);
+}
+
+requestId = requestAnimationFrame(step);

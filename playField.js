@@ -48,12 +48,12 @@ class PlayField {
       innerArray.forEach((_elm, x) => {
         for (let i = 0; i < this.snake.point.length; i++) {
           if (x === this.snake.point[i].x && y === this.snake.point[i].y) {
-            board += '1 ';
+            board += '<span style="color: OrangeRed">1</span> ';
             return;
           }
         }
         if (x === this.apple.x && y === this.apple.y) {
-          board += 'A ';
+          board += '<span style="color: LimeGreen">A</span> ';
         } else {
           board += '0 ';
         }
