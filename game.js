@@ -1,42 +1,22 @@
 import { PlayField } from './playField.js';
 
 const board = document.querySelector('.board');
-const playField = new PlayField(11);
+const playField = new PlayField(17);
 
 document.addEventListener('keydown', (event) => {
   const keyName = event.key;
-  if (keyName === 'ArrowUp') {
-    playField.snake.moveUp();
-    if (playField.collisionDetection()) {
-      board.innerHTML = '<pre>Game Over</pre>';
-    } else {
-      board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
-    }
-  }
-  if (keyName === 'ArrowDown') {
-    playField.snake.moveDown();
-    if (playField.collisionDetection()) {
-      board.innerHTML = '<pre>Game Over</pre>';
-    } else {
-      board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
-    }
-  }
-  if (keyName === 'ArrowLeft') {
-    playField.snake.moveLeft();
-    if (playField.collisionDetection()) {
-      board.innerHTML = '<pre>Game Over</pre>';
-    } else {
-      board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
-    }
-  }
-  if (keyName === 'ArrowRight') {
-    playField.snake.moveRight();
-    if (playField.collisionDetection()) {
-      board.innerHTML = '<pre>Game Over</pre>';
-    } else {
-      board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
-    }
-  }
+
+  playField.changeSnakeDirection(keyName);
 });
 
-board.innerHTML = `<pre>${playField.paintTheField()}</pre>`;
+function loop() {
+  playField.update();
+
+  board.innerHTML = `<pre>${playField.paint()}</pre>`;
+
+  setTimeout(() => {
+    requestAnimationFrame(loop);
+  }, 1000 / 2);
+}
+
+loop();
