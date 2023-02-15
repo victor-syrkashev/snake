@@ -14,7 +14,9 @@ let isSplashScreen = false;
 let isNewRecord = false;
 let keyNames = [];
 let timeoutId = 0;
-let speed = 200;
+let speed = 170;
+let speedGear = 0;
+const pointsForSpeedIncrease = [5, 10, 20, 30, 40, 50];
 
 function updateHighScores() {
   if (JSON.parse(localStorage.getItem('highScores')) === null) {
@@ -73,24 +75,11 @@ function loop() {
 
   timeoutId = setInterval(() => {
     if (!isPaused) {
-      if (playField.counter < 5) {
-        speed = 170;
-        clearInterval(timeoutId);
-        loop();
-      } else if (playField.counter < 10) {
-        speed = 150;
-        clearInterval(timeoutId);
-        loop();
-      } else if (playField.counter < 20) {
-        speed = 120;
-        clearInterval(timeoutId);
-        loop();
-      } else if (playField.counter < 30) {
-        speed = 100;
-        clearInterval(timeoutId);
-        loop();
-      } else if (playField.counter < 50) {
-        speed = 70;
+      const newSpeedGear =
+        pointsForSpeedIncrease.indexOf(playField.counter) + 1;
+      if (newSpeedGear && newSpeedGear !== speedGear) {
+        speedGear += 1;
+        speed -= 20;
         clearInterval(timeoutId);
         loop();
       }
