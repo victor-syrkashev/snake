@@ -1,0 +1,293 @@
+body,
+h1,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background-color: rgb(255, 255, 255);
+  color: #3c3c3b;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  border: 2px solid #3c3c3b;
+  transition: all 0.2s linear;
+}
+button:hover {
+  background-color: rgb(240, 240, 240);
+}
+button:disabled {
+  background-color: rgb(179, 179, 179);
+}
+button:active {
+  background-color: rgb(230, 230, 230);
+}
+
+.container {
+  display: grid;
+  grid-template-rows: 1fr 2fr 1fr;
+  place-items: center;
+  height: 100vh;
+  background-color: rgb(79, 79, 79);
+}
+.container .counter {
+  color: rgb(255, 255, 255);
+  width: 30rem;
+  align-self: flex-end;
+  letter-spacing: 0.2rem;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 0;
+  visibility: hidden;
+  top: 6rem;
+  transition: all 0.5s ease-in;
+}
+.container .counter.active {
+  visibility: visible;
+  top: 0;
+}
+.container .board {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+  width: 30rem;
+  height: 0;
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+  border: 10px solid #3c3c3b;
+  border-radius: 1rem;
+  transition: height 0.3s ease-in-out;
+}
+.container .board.active {
+  height: 30rem;
+}
+.container .board.active .alert-msg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+}
+.container .board.active .alert-msg img {
+  width: 5rem;
+}
+.container .board.active .alert-msg.hidden {
+  display: none;
+}
+.container .board .empty-field {
+  background-color: none;
+  border-bottom: 0.06rem solid rgba(140, 140, 140, 0.3);
+  border-right: 0.06rem solid rgba(140, 140, 140, 0.3);
+  box-sizing: border-box;
+  height: 1.25rem;
+  width: 1.25rem;
+}
+.container .board .snake {
+  background-color: #3c3c3b;
+  border-bottom: 0.06rem solid rgba(140, 140, 140, 0.3);
+  border-right: 0.06rem solid rgba(140, 140, 140, 0.3);
+  box-sizing: border-box;
+  height: 1.25rem;
+  width: 1.25rem;
+}
+.container .board .apple {
+  background-color: #f7435e;
+  border-bottom: 0.06rem solid rgba(140, 140, 140, 0.3);
+  border-right: 0.06rem solid rgba(140, 140, 140, 0.3);
+  box-sizing: border-box;
+  height: 1.25rem;
+  width: 1.25rem;
+}
+.container .btn-container {
+  align-self: flex-start;
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  z-index: 0;
+  visibility: hidden;
+  top: -6rem;
+  transition: all 0.5s ease-in;
+}
+.container .btn-container.active {
+  visibility: visible;
+  top: 0;
+}
+
+.main-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+.main-menu h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+.main-menu .player-name {
+  align-self: flex-start;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  position: relative;
+  visibility: visible;
+  gap: 0.8rem;
+}
+.main-menu .player-name .avatar {
+  width: 1.2rem;
+}
+.main-menu .player-name p {
+  font-size: 1.2rem;
+}
+.main-menu .player-name .sub-menu {
+  width: 1rem;
+  padding-bottom: 0.2rem;
+  text-align: center;
+}
+.main-menu .player-name .sub-menu svg {
+  width: 0.4rem;
+}
+.main-menu .player-name .sub-menu:hover + .change-name-btn {
+  visibility: visible;
+  opacity: 1;
+}
+.main-menu .player-name .change-name-btn {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  font-size: 1rem;
+  border: 1px solid #3c3c3b;
+  border-radius: 0.3rem;
+  padding: 0.3rem 0.5rem 0.4rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+.main-menu .player-name .change-name-btn:hover {
+  visibility: visible;
+  opacity: 1;
+}
+.main-menu .player-name.hidden {
+  visibility: hidden;
+}
+
+.high-scores-table {
+  display: grid;
+  place-content: start;
+  justify-content: center;
+  width: 100%;
+  margin: 1.5rem 0;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "title title" "score name" "page page" "btn btn";
+}
+.high-scores-table .column-scores,
+.high-scores-table .column-names {
+  justify-self: center;
+}
+.high-scores-table .column-names {
+  grid-area: name;
+}
+.high-scores-table .column-scores {
+  grid-area: score;
+}
+.high-scores-table h1 {
+  grid-area: title;
+  margin-bottom: 1rem;
+}
+.high-scores-table .go-back {
+  grid-area: btn;
+}
+
+.set-name {
+  display: grid;
+  place-content: center;
+  width: 100%;
+  margin-bottom: 5rem;
+}
+.set-name form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.set-name form .submit-btn {
+  margin-left: 5rem;
+}
+.set-name .input-name {
+  box-sizing: border-box;
+  width: 100%;
+  height: 2.2rem;
+  font-size: 1.2rem;
+  color: #3c3c3b;
+  padding: 0 0.5rem;
+  border: 2px solid #3c3c3b;
+  border-radius: 0.5rem;
+}
+
+.control-scheme {
+  display: grid;
+  place-content: center;
+  margin: 1rem;
+  gap: 1.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.control-scheme .arrow-key {
+  width: 10rem;
+  justify-self: center;
+}
+.control-scheme .key-p,
+.control-scheme .key-q {
+  width: 3.2rem;
+}
+.control-scheme .keys-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 3rem;
+}
+.control-scheme .keys-container p {
+  font-size: 1.2rem;
+  flex-grow: 1;
+  text-align: start;
+}
+.control-scheme .got-it {
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  justify-self: center;
+}
+.control-scheme .got-it:hover {
+  background-color: #3c3c3b;
+  color: rgb(255, 255, 255);
+}
+
+.game-over {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 2rem;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5rem;
+  font-size: 1.4rem;
+}
+.game-over .score {
+  font-size: 3rem;
+}
+
+/*# sourceMappingURL=style.css.map */
