@@ -20,10 +20,17 @@ class PlayField {
   }
 
   addNewApple() {
-    this.apple = new Apple(
-      Math.floor(Math.random() * this.size),
-      Math.floor(Math.random() * this.size)
-    );
+    let x = 0;
+    let y = 0;
+    const snakeXCoords = this.snake.points.map((point) => point.x);
+    const snakeYCoords = this.snake.points.map((point) => point.y);
+
+    do {
+      x = Math.floor(Math.random() * this.size);
+      y = Math.floor(Math.random() * this.size);
+    } while (snakeXCoords.includes(x) && snakeYCoords.includes(y));
+
+    this.apple = new Apple(x, y);
   }
 
   createPlayField() {
