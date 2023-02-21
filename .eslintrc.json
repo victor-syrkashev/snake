@@ -15,6 +15,9 @@
     "import/prefer-default-export": "off",
     "operator-linebreak": "off",
     "no-lonely-if": "off",
-    "wrap-iife": ["error", "inside"]
+    "wrap-iife": ["error", "inside"],
+    "no-unused-expressions": ["error", { "allowTernary": true }],
+    "no-restricted-syntax": "off",
+    "guard-for-in": "off"
   }
 }

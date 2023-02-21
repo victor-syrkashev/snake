@@ -5,6 +5,10 @@ p {
   padding: 0;
 }
 
+body {
+  overflow: hidden;
+}
+
 button {
   background-color: rgb(255, 255, 255);
   color: #3c3c3b;
@@ -23,6 +27,12 @@ button:disabled {
 button:active {
   background-color: rgb(230, 230, 230);
 }
+@media screen and (max-width: 500px) {
+  button {
+    padding: 0.3rem 0.7rem;
+    font-size: 1rem;
+  }
+}
 
 .container {
   display: grid;
@@ -30,6 +40,11 @@ button:active {
   place-items: center;
   height: 100vh;
   background-color: rgb(79, 79, 79);
+}
+@media screen and (max-width: 500px) {
+  .container {
+    grid-template-rows: auto 1fr 1fr;
+  }
 }
 .container .counter {
   color: rgb(255, 255, 255);
@@ -48,6 +63,13 @@ button:active {
 .container .counter.active {
   visibility: visible;
   top: 0;
+}
+@media screen and (max-width: 500px) {
+  .container .counter {
+    width: 93vmin;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
 }
 .container .board {
   display: flex;
@@ -85,6 +107,14 @@ button:active {
 .container .board.active .alert-msg.hidden {
   display: none;
 }
+@media screen and (max-width: 500px) {
+  .container .board.active .alert-msg {
+    font-size: 1rem;
+  }
+  .container .board.active .alert-msg img {
+    width: 4rem;
+  }
+}
 .container .board .empty-field {
   background-color: none;
   border-bottom: 0.06rem solid rgba(140, 140, 140, 0.3);
@@ -109,20 +139,101 @@ button:active {
   height: 1.25rem;
   width: 1.25rem;
 }
+@media screen and (max-width: 500px) {
+  .container .board .empty-field,
+  .container .board .snake,
+  .container .board .apple {
+    width: 3.875vmin;
+    height: 3.875vmin;
+  }
+}
+@media screen and (max-width: 500px) {
+  .container .board {
+    border-width: 5px;
+    width: 93vmin;
+  }
+  .container .board.active {
+    height: 93vmin;
+  }
+}
 .container .btn-container {
   align-self: flex-start;
-  margin-top: 2rem;
-  display: flex;
+  margin-top: 1rem;
+  display: grid;
+  justify-items: center;
+  grid-template-areas: "arrow" "game";
   gap: 1rem;
   position: relative;
   z-index: 0;
   visibility: hidden;
-  top: -6rem;
+  top: -12rem;
   transition: all 0.5s ease-in;
 }
 .container .btn-container.active {
   visibility: visible;
   top: 0;
+}
+@media screen and (max-width: 500px) {
+  .container .btn-container {
+    margin-top: 0.5rem;
+  }
+}
+.container .btn-container .arrow-btns {
+  grid-area: arrow;
+  display: none;
+  grid-template-areas: ". up ." "left down right";
+  gap: 0.5rem;
+}
+@media (hover: none) {
+  .container .btn-container .arrow-btns {
+    display: grid;
+  }
+}
+@media screen and (max-width: 500px) {
+  .container .btn-container .arrow-btns img {
+    width: 0.75rem;
+  }
+  .container .btn-container .arrow-btns button {
+    padding: 0.6rem;
+  }
+}
+@media screen and (max-height: 600px) {
+  .container .btn-container .arrow-btns {
+    grid-template-areas: "left up down right";
+  }
+}
+.container .btn-container .arrow-btns img {
+  width: 1.5rem;
+}
+.container .btn-container .arrow-btns button {
+  padding: 1.2rem;
+}
+.container .btn-container .arrow-btns .arrow-up-btn {
+  grid-area: up;
+}
+.container .btn-container .arrow-btns .arrow-up-btn img {
+  transform: rotate(180deg);
+}
+.container .btn-container .arrow-btns .arrow-left-btn {
+  grid-area: left;
+}
+.container .btn-container .arrow-btns .arrow-left-btn img {
+  transform: rotate(90deg);
+}
+.container .btn-container .arrow-btns .arrow-down-btn {
+  grid-area: down;
+}
+.container .btn-container .arrow-btns .arrow-right-btn {
+  grid-area: right;
+}
+.container .btn-container .arrow-btns .arrow-right-btn img {
+  transform: rotate(-90deg);
+}
+.container .game-btns {
+  grid-area: game;
+}
+.container .game-btns button:nth-child(n):not(:last-child) {
+  margin-right: 0.5rem;
 }
 
 .main-menu {
@@ -133,6 +244,14 @@ button:active {
   width: 100%;
   margin-top: 1rem;
   gap: 1rem;
+}
+@media screen and (max-width: 500px) {
+  .main-menu .player-name .avatar {
+    width: 0.8rem;
+  }
+  .main-menu .player-name p {
+    font-size: 1rem;
+  }
 }
 .main-menu h1 {
   font-size: 3rem;
@@ -154,16 +273,19 @@ button:active {
   font-size: 1.2rem;
 }
 .main-menu .player-name .sub-menu {
-  width: 1rem;
-  padding-bottom: 0.2rem;
   text-align: center;
+  padding: 0 0.5rem;
+  border: none;
 }
 .main-menu .player-name .sub-menu svg {
   width: 0.4rem;
+  transition: fill 0.2s linear;
 }
-.main-menu .player-name .sub-menu:hover + .change-name-btn {
-  visibility: visible;
-  opacity: 1;
+.main-menu .player-name .sub-menu:hover {
+  background-color: rgb(255, 255, 255);
+}
+.main-menu .player-name .sub-menu:hover svg {
+  fill: rgb(150, 150, 150);
 }
 .main-menu .player-name .change-name-btn {
   visibility: hidden;
@@ -178,7 +300,7 @@ button:active {
   cursor: pointer;
   transition: all 0.2s linear;
 }
-.main-menu .player-name .change-name-btn:hover {
+.main-menu .player-name .change-name-btn.visible {
   visibility: visible;
   opacity: 1;
 }
@@ -212,6 +334,14 @@ button:active {
 .high-scores-table .go-back {
   grid-area: btn;
 }
+@media screen and (max-width: 500px) {
+  .high-scores-table {
+    margin: 1rem 0;
+  }
+  .high-scores-table h1 {
+    font-size: 1.7rem;
+  }
+}
 
 .set-name {
   display: grid;
@@ -237,6 +367,14 @@ button:active {
   padding: 0 0.5rem;
   border: 2px solid #3c3c3b;
   border-radius: 0.5rem;
+}
+@media screen and (max-width: 500px) {
+  .set-name {
+    margin-bottom: 3rem;
+  }
+  .set-name h1 {
+    font-size: 1.7rem;
+  }
 }
 
 .control-scheme {
@@ -275,6 +413,34 @@ button:active {
   background-color: #3c3c3b;
   color: rgb(255, 255, 255);
 }
+@media screen and (max-width: 500px) {
+  .control-scheme {
+    gap: 1rem;
+    font-size: 1rem;
+  }
+  .control-scheme .arrow-key {
+    width: 7rem;
+  }
+  .control-scheme .key-p,
+  .control-scheme .key-q {
+    width: 2.2rem;
+  }
+  .control-scheme .keys-container {
+    margin-left: 1rem;
+  }
+  .control-scheme .keys-container p {
+    font-size: 1rem;
+  }
+  .control-scheme .got-it {
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    justify-self: center;
+  }
+  .control-scheme .got-it:hover {
+    background-color: #3c3c3b;
+    color: rgb(255, 255, 255);
+  }
+}
 
 .game-over {
   display: grid;
@@ -288,6 +454,17 @@ button:active {
 }
 .game-over .score {
   font-size: 3rem;
+}
+@media screen and (max-width: 500px) {
+  .game-over {
+    margin-bottom: 4rem;
+  }
+  .game-over h1 {
+    font-size: 1.7rem;
+  }
+  .game-over .score {
+    font-size: 2rem;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

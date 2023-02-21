@@ -7,6 +7,7 @@ const btnContainer = document.querySelector('.btn-container');
 const mainPageBtn = document.querySelector('.main-page-btn');
 const pauseBtn = document.querySelector('.pause-btn');
 const restartBtn = document.querySelector('.restart-btn');
+const arrowBtns = document.querySelector('.arrow-btns');
 const fieldSize = 24;
 let playField = new PlayField(fieldSize);
 let isPaused = false;
@@ -98,6 +99,8 @@ function loop() {
         pauseBtn.disabled = 'true';
         clearInterval(timeoutId);
         keyNames = [];
+        speed = 170;
+        speedGear = 0;
         updateHighScores();
         Pages.gameOver(playField.counter, isNewRecord);
         isNewRecord = false;
@@ -126,6 +129,26 @@ function splashScreen() {
   isSplashScreen = true;
   board.innerHTML = `<div class='alert-msg'><img src="./images/arrow-buttons.svg" alert="arrow-buttons"><p>Press arrow button to start</p></div>${playField.paint()}`;
   document.addEventListener('keydown', validateKeyPress);
+  arrowBtns.addEventListener('click', validateKeyPress);
+}
+
+function toggleSubMenu(innerBtn) {
+  const subMenuBtn = document.querySelector('.sub-menu');
+  subMenuBtn.addEventListener('click', () => {
+    innerBtn.classList.toggle('visible');
+  });
+  document.addEventListener('click', (e) => {
+    const { target } = e;
+    const isSubMenuActive = innerBtn.classList.contains('visible');
+    if (
+      target !== subMenuBtn &&
+      !subMenuBtn.contains(target) &&
+      target !== innerBtn &&
+      isSubMenuActive
+    ) {
+      innerBtn.classList.remove('visible');
+    }
+  });
 }
 
 function setName() {
@@ -184,6 +207,12 @@ function restartGame() {
 }
 
 function validateKeyPress(event) {
+  window?.navigator?.vibrate?.(20);
+  if (!event.code) {
+    event.target.alt
+      ? (event.code = event.target.alt)
+      : (event = event.target.dataset);
+  }
   const snake = playField.snake.points[0];
   const lastKeyName = keyNames[keyNames.length - 1];
   const snakeMoveBtns = playField.snake.moveBtnsList;
@@ -228,21 +257,25 @@ function validateKeyPress(event) {
 function mainPage() {
   Pages.mainMenu();
   document.removeEventListener('keydown', validateKeyPress);
+  arrowBtns.removeEventListener('click', validateKeyPress);
   const startBtn = document.querySelector('.start-btn');
   const highSoreTableBtn = document.querySelector('.high-score-btn');
   const changeNameBtn = document.querySelector('.change-name-btn');
+  toggleSubMenu(changeNameBtn);
 
   if (playField.isGameOver) {
     startBtn.innerHTML = 'Restart';
     startBtn.addEventListener('click', () => {
       restartGame();
       document.addEventListener('keydown', validateKeyPress);
+      arrowBtns.addEventListener('click', validateKeyPress);
     });
   } else if (isPaused) {
     startBtn.innerHTML = 'Continue';
     startBtn.addEventListener('click', () => {
       continueOrPauseGame();
       document.addEventListener('keydown', validateKeyPress);
+      arrowBtns.addEventListener('click', validateKeyPress);
     });
   } else {
     startBtn.addEventListener('click', startGame);

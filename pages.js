@@ -9,7 +9,7 @@ class Pages {
   static mainMenu() {
     board.classList.add('active');
     const playerName = localStorage.getItem('name');
-    board.innerHTML = `<div class="main-menu"><div class="player-name"><div class="avatar">${avatarIcon}</div><p>${playerName}</p><div class="sub-menu">${subMenu}</div><button type="button" class="change-name-btn">change name</button></div><h1>Snake</h1><button type="button" class="start-btn">Start Game</button><button type="button" class="high-score-btn">High score table</button></div>`;
+    board.innerHTML = `<div class="main-menu"><div class="player-name"><div class="avatar">${avatarIcon}</div><p>${playerName}</p><button type="button" class="sub-menu">${subMenu}</button><button type="button" class="change-name-btn">change name</button></div><h1>Snake</h1><button type="button" class="start-btn">Start Game</button><button type="button" class="high-score-btn">High score table</button></div>`;
 
     if (!playerName) {
       const playerNameContainer = document.querySelector('.player-name');
@@ -20,7 +20,7 @@ class Pages {
   static setName() {
     board.classList.add('active');
     board.innerHTML =
-      '<div class="set-name"><h1>Please enter your name:</h1><form class="name-form"><input type="text" class="input-name" name="name" maxlength="30" required><div><button type="button" class="go-back">Go back</button><button class="submit-btn">Ok</button></div></form></div>';
+      '<div class="set-name"><h1>Please enter your name:</h1><form class="name-form"><input type="text" class="input-name" name="name" maxlength="20" required><div><button type="button" class="go-back">Go back</button><button class="submit-btn">Ok</button></div></form></div>';
   }
 
   static controlScheme() {
