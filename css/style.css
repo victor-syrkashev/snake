@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 body,
 h1,
 p {
   margin: 0;
   padding: 0;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
@@ -13,6 +15,7 @@ button {
   background-color: rgb(255, 255, 255);
   color: #3c3c3b;
   padding: 0.5rem 1rem;
+  font-family: "Roboto", sans-serif;
   font-size: 1.2rem;
   border-radius: 0.5rem;
   border: 2px solid #3c3c3b;
@@ -253,9 +256,9 @@ button:active {
     font-size: 1rem;
   }
 }
-.main-menu h1 {
-  font-size: 3rem;
-  margin: 0;
+.main-menu img {
+  width: 10rem;
+  margin-bottom: 0.5rem;
 }
 .main-menu .player-name {
   align-self: flex-start;
