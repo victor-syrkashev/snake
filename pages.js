@@ -9,7 +9,7 @@ class Pages {
   static mainMenu() {
     board.classList.add('active');
     const playerName = localStorage.getItem('name');
-    board.innerHTML = `<div class="main-menu"><div class="player-name"><div class="avatar">${avatarIcon}</div><p>${playerName}</p><button type="button" class="sub-menu">${subMenu}</button><button type="button" class="change-name-btn">change name</button></div><h1>Snake</h1><button type="button" class="start-btn">Start Game</button><button type="button" class="high-score-btn">High score table</button></div>`;
+    board.innerHTML = `<div class="main-menu"><div class="player-name"><div class="avatar">${avatarIcon}</div><p>${playerName}</p><button type="button" class="sub-menu">${subMenu}</button><button type="button" class="change-name-btn">change name</button></div><img src="./images/snake-title.svg" alt="title" /><button type="button" class="start-btn">Start Game</button><button type="button" class="high-score-btn">High score table</button></div>`;
 
     if (!playerName) {
       const playerNameContainer = document.querySelector('.player-name');
